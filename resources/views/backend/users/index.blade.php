@@ -47,12 +47,19 @@
 			// Filter based on ID
 			const result = users.filter(user => user.id == $(this).attr('data-id'));
 			
-			$('#update').modal('show');
+			// Restrict Administrator Role
+			if (result[0]['role_id'] == 1)
+			{
+				alert('Administrator cannot be updated.');
+			}else{
+				$('#update').modal('show');
 
-			$('#name').val(result[0]['name']);
-			$('#email').val(result[0]['email']);
-			$('#user_id').val(result[0]['id']);
-			$('#del_user_id').val(result[0]['id']);
+				$('#name').val(result[0]['name']);
+				$('#email').val(result[0]['email']);
+				$('#user_id').val(result[0]['id']);
+				$('#del_user_id').val(result[0]['id']);
+			}
+			
 
 
 

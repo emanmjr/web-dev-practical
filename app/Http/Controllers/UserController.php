@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Role as Model;
+use App\User as Model;
+use App\Role;
+use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
 
-class RolesController extends Controller
+class UserController extends Controller
 {
     //
 
     public function index()
     {
-    	$roles = Model::all();
-    	return view('backend.roles.index', compact('roles'));
+        $users = Model::all();
+    	$roles = Role::all();
+    	return view('backend.users.index', compact('users', 'roles'));
     }
 
     public function store(Request $request)
@@ -22,12 +25,18 @@ class RolesController extends Controller
     	// Validations
     	$data = $request->validate([
             'name' => 'required',
-            'description' => 'required',
+            'email' => 'required',
+            'role_id' => 'required'
         ]);
 
 
     	// Store Data
-        Model::create($data);
+        Model::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => \Hash::make(Str::random(40)), //send email
+            'role_id' => $request->role_id
+        ]);
 
         return back()->with('success');
 
@@ -40,14 +49,14 @@ class RolesController extends Controller
     	// Validations
     	$data = $request->validate([
             'name' => 'required',
-            'description' => 'required',
+            'email' => 'required',
         ]);
 
 
     	// Update Data
-        $role = Model::find($request->role_id);
+        $role = Model::find($request->user_id);
         $role->name = $request->name;
-        $role->description = $request->description;
+        $role->email = $request->email;
         $role->save();
 
 
@@ -59,9 +68,8 @@ class RolesController extends Controller
     public function destroy(Request $request)
     {
 
-dd($request->del_role_id);
     	// Update Data
-        $role = Model::find($request->del_role_id)->delete();
+        $role = Model::find($request->del_user_id)->delete();
         
         return back()->with('success');
 

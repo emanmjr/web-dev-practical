@@ -11,9 +11,11 @@
 		        <form method="POST" action="{{ route('dashboard.users.roles.store') }}">
 		        	@csrf
 		        	<div class="form-group">
+		        		<label>Display Name</label>
 		        		<input type="text" name="name" value="{{ old('name') }}" class="form-control {{ $errors->first('name') ? 'is-invalid' : ''}}">
 		        	</div>
 		        	<div class="form-group">
+		        		<label>Description</label>
 		        		<input type="text" name="description" value="{{ old('description') }}" class="form-control {{ $errors->first('name') ? 'is-invalid' : ''}}">
 		        	</div>
 		        	@if ($errors->any())

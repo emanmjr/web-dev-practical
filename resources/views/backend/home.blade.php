@@ -3,7 +3,32 @@
 @section('content')
 <div class="container">
     <div class="row ">
-         <canvas id="myChart" width="400" height="400"></canvas>
+        <h3>My Expenses</h3>
+        <br><br>
+        <div class="col-md-12">
+            <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Expense Categories</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($expenses as $key => $expense)
+                <tr data-id="{{ $expense->id }}">
+                  <td>{{ $expense->categoryName }}</td>
+                  <td>{{ $expense->totalAmount }}</td>
+                </tr>
+            @endforeach
+          </tbody>
+        </table>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+             <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+        <div class="col-md-3"></div>
+        
     </div>
 </div>
 @endsection
@@ -11,14 +36,25 @@
 @push('after-scripts')
 
 <script>
+
+// Filter Data for Pie Graph
+var expenses = {!! $expenses !!};
+var expensesLabels = [];
+var expensesData = [];
+for (var i = 0; i < expenses.length; i++) {
+    expensesLabels.push(expenses[i]['categoryName']);
+    expensesData.push(expenses[i]['totalAmount']);
+}
+
+
 var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: expensesLabels,
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: expensesData,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

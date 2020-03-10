@@ -62,7 +62,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
+                            <li class="nav-item" style="padding-top: 4px;">
                                 Welcome to Expense Manager
                             </li>
                             <li class="nav-item dropdown">

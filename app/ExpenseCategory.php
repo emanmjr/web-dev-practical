@@ -9,4 +9,6 @@ class ExpenseCategory extends Model
     protected $fillable = [
         'name', 'description',
     ];
+
+    protected $table = 'expense_categories';
 }

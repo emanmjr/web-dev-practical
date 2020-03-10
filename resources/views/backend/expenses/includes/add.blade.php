@@ -5,28 +5,26 @@
 	    <!-- Modal content-->
 	    <div class="modal-content">
 		    <div class="modal-header">
-		        <h4 class="modal-title">Add User</h4>
+		        <h4 class="modal-title">Add Expenses</h4>
 		    </div>
 		    <div class="modal-body">
-		        <form method="POST" action="{{ route('dashboard.users.store') }}">
+		        <form method="POST" action="{{ route('dashboard.expense.store') }}">
 		        	@csrf
 		        	<div class="form-group">
-		        		<label>Name</label>
-		        		<input type="text" name="name" value="{{ old('name') }}" class="form-control {{ $errors->first('name') ? 'is-invalid' : ''}}">
-		        	</div>
-		        	<div class="form-group">
-		        		<label>Email</label>
-		        		<input type="text" name="email" value="{{ old('email') }}" class="form-control {{ $errors->first('name') ? 'is-invalid' : ''}}">
-		        	</div>
-
-
-		        	<div class="form-group">
-		        		<label>Role</label>
-		        		<select class="form-control" name="role_id">
-		        			@foreach($roles as $key => $role)
-		        				<option {{ old("role_id") == $role->id ? 'selected' : '' }} value="{{ $role->id }}"> {{ $role->name }}</option>
+		        		<label>Expense Category</label>
+		        		<select type="text" name="expense_category_id" value="{{ old('expense_category_id') }}" class="form-control {{ $errors->first('expense_category_id') ? 'is-invalid' : ''}}">
+		        			@foreach($expenseCategory as $key => $category)
+		        				<option value="{{ $category->id }}">{{ $category->name }}</option>
 		        			@endforeach
 		        		</select>
+		        	</div>
+		        	<div class="form-group">
+		        		<label>Amount</label>
+		        		<input type="text" name="amount" value="{{ old('amount') }}" class="form-control {{ $errors->first('amount') ? 'is-invalid' : ''}}">
+		        	</div>
+		        	<div class="form-group">
+		        		<label>Entry Date</label>
+		        		<input type="date" name="entry_date" value="{{ old('entry_date') }}" class="form-control {{ $errors->first('entry_date') ? 'is-invalid' : ''}}">
 		        	</div>
 		        	@if ($errors->any())
 					      <div class="alert alert-danger">

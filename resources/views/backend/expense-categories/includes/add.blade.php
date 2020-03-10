@@ -5,28 +5,20 @@
 	    <!-- Modal content-->
 	    <div class="modal-content">
 		    <div class="modal-header">
-		        <h4 class="modal-title">Add User</h4>
+		        <h4 class="modal-title">Add Category</h4>
 		    </div>
 		    <div class="modal-body">
-		        <form method="POST" action="{{ route('dashboard.users.store') }}">
+		        <form method="POST" action="{{ route('dashboard.expense.category.store') }}">
 		        	@csrf
+		        	
 		        	<div class="form-group">
-		        		<label>Name</label>
+		        		<label>Display Name</label>
 		        		<input type="text" name="name" value="{{ old('name') }}" class="form-control {{ $errors->first('name') ? 'is-invalid' : ''}}">
 		        	</div>
 		        	<div class="form-group">
-		        		<label>Email</label>
-		        		<input type="text" name="email" value="{{ old('email') }}" class="form-control {{ $errors->first('name') ? 'is-invalid' : ''}}">
-		        	</div>
+		        		<label>Description</label>
 
-
-		        	<div class="form-group">
-		        		<label>Role</label>
-		        		<select class="form-control" name="role_id">
-		        			@foreach($roles as $key => $role)
-		        				<option {{ old("role_id") == $role->id ? 'selected' : '' }} value="{{ $role->id }}"> {{ $role->name }}</option>
-		        			@endforeach
-		        		</select>
+		        		<input type="text" name="description" value="{{ old('description') }}" class="form-control {{ $errors->first('description') ? 'is-invalid' : ''}}">
 		        	</div>
 		        	@if ($errors->any())
 					      <div class="alert alert-danger">

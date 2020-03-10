@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\User as Model;
-use App\Role;
-use Illuminate\Support\Str;
+use App\Role as Model;
 
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class RoleController extends Controller
 {
     //
 
     public function index()
     {
-        $users = Model::all();
-    	$roles = Role::all();
-    	return view('backend.users.index', compact('users', 'roles'));
+    	$roles = Model::all();
+    	return view('backend.roles.index', compact('roles'));
     }
 
     public function store(Request $request)
@@ -25,18 +22,12 @@ class UsersController extends Controller
     	// Validations
     	$data = $request->validate([
             'name' => 'required',
-            'email' => 'required',
-            'role_id' => 'required'
+            'description' => 'required',
         ]);
 
 
     	// Store Data
-        Model::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => \Hash::make(Str::random(40)), //send email
-            'role_id' => $request->role_id
-        ]);
+        Model::create($data);
 
         return back()->with('success');
 
@@ -49,14 +40,14 @@ class UsersController extends Controller
     	// Validations
     	$data = $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'description' => 'required',
         ]);
 
 
     	// Update Data
-        $role = Model::find($request->user_id);
+        $role = Model::find($request->role_id);
         $role->name = $request->name;
-        $role->email = $request->email;
+        $role->description = $request->description;
         $role->save();
 
 
@@ -69,7 +60,7 @@ class UsersController extends Controller
     {
 
     	// Update Data
-        $role = Model::find($request->del_user_id)->delete();
+        $role = Model::find($request->del_role_id)->delete();
         
         return back()->with('success');
 

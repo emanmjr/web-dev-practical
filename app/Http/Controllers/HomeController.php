@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Expense;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('backend.home');
+        // Move to Expenses Repository
+        $expenses = Expense::selectRaw('SUM(expenses.amount) as totalAmount, expense_categories.name as categoryName')
+                        ->join('expense_categories', 'expenses.expense_category_id', 'expense_categories.id')
+                        ->groupBy('expense_categories.name')->get();
+
+        return view('backend.home', compact('expenses'));
     }
 }
